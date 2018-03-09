@@ -11,46 +11,54 @@ using namespace std;
 
 bool validateInput(string);
 
-int main() 
+int main()
 {
     // Booleans for Menu
 	bool keepGoing = true;
 
 	// Variables to use
 	string decision;
-    string messageFromQueue;
-    
-    // Using ftok() to generate a queue
-	// int qid = msgget(ftok(".",'u'), IPC_EXCL|IPC_CREAT|0600);
-    // cout << "Queue Created, now waiting....." <<endl;
-    // Grabbing the existing queue from the other program
-    int qid = msgget(ftok(".",'u'), 0);
-    // declare my message buffer and its size
-	struct buf 
+  string messageFromQueue;
+	string realMessage;
+	string identifier;
+
+	// buffer with the message contents
+	struct buf
 	{
 		long mtype; // required
-		string message; // mesg content
+		char message[50]; // mesg content
 	};
-	buf msg;
-	int size = sizeof(msg)-sizeof(long);
 
+	buf msg;	//initializes instance of buffer
+	int size = sizeof(msg)-sizeof(long);
+	int msgRcvdCount=0;
+	
+	// Grabbing the existing queue from the other program
+	int qid = msgget(ftok(".",'u'), 0);
     while(keepGoing)
     {
-        cout << 
         msgrcv(qid, (struct msgbuf *)&msg, size, 118, 0);
-        cout << " bytes "<<endl;
         messageFromQueue = msg.message;
-        if(messageFromQueue.compare("quit") == 0)
-        {
+				identifier = messageFromQueue.substr(0,3);
+        realMessage = messageFromQueue.substr(5);
+
+				if(msgRcvdCount==5000)	//quits on the max messages recieved = 5000
+				{
             keepGoing = false;
             cout << "\nQuiting Program....."<<endl;
-
-            // now safe to delete message queue
-	        msgctl (qid, IPC_RMID, NULL);
         }
+				else if(identifier.compare("997"))
+				{
+					msgRcvdCount++;
+					cout << identifier <<"'s Message Received: "<< realMessage <<endl;
+          strcpy(msg.message, "Roger Roger from Receiver 2");
+          msg.mtype = 1;
+			    msgsnd(qid, (struct msgbuf *)&msg, size, 0);
+				}
         else
         {
-            cout << "Message Received: "<<msg.message<<endl;
+					msgRcvdCount++;
+          cout << "Message Received: "<<msg.message<<endl;
         }
 
     }
