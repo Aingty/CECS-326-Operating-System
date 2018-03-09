@@ -22,7 +22,7 @@ int main()
 	bool keepGoing = true;
 
 	// Variables to use
-	string decision;
+	string messageContent;
 
     // Grabbing the existing queue from the other program
     int qid = msgget(ftok(".",'u'), 0);
@@ -38,34 +38,38 @@ int main()
 
 	cout << "Welcome Sender 997"<<endl;
 
-	while(keepGoing)
-	{
-		cout << "What number would you like to send to Reciever 1? (\"quit\" to quit)\nYour Number: ";
-		cin >> decision;
-		if(decision.compare("quit") == 0)
-		{
-			cout << "\nSending quit to queue...\n\tQuiting, GoodBye! :)\n";
-			msg.message = decision;
-			msg.mtype = 117;
-			cout << 
+	int number = 0;
+	do{
+		
+		do{
+			number = (rand() % 100000) % 997;
+		}while (number != 0);
+
+		messageContent = "997: " + to_string(number);
+
+		cout << "Sending to Reciever 1: " << messageContent;
+		msg.message = messageContent;
+		msg.mtype = 117;
+		cout << 
 			msgsnd(qid, (struct msgbuf *)&msg, size, 0);
 			cout << endl;
-			exit(0);
-		}
-		if(validateInput(decision))
-		{
-			cout << "\nSending your number.....\n";
-			msg.message = decision;
-			msg.mtype = 117;
-			cout <<
+
+		cout << "Sending to Reciever 2: " << messageContent;
+		msg.message = messageContent;
+		msg.mtype = 118;
+		cout << 
 			msgsnd(qid, (struct msgbuf *)&msg, size, 0);
-			cout <<endl;
-		}
-		else
-		{
-			cout << "Invalid Input!! please send number only!!\n\n";
-		}
-	} 
+			cout << endl;
+		
+
+		cout << "\nWaiting For Reciever 1 to recieve . . . " << endl;
+		msgrcv(qid, (struct msgbuf *)&msg, size, 1, 0);
+		cout << "Message Recieved." << endl;
+		cout << "\nWaiting For Reciever 2 to recieve . . . " << endl;
+		msgrcv(qid, (struct msgbuf *)&msg, size, 1, 0);
+		cout << "Message Recieved." << endl;
+
+	} while(number > 100);
     return 0;
 }
 
