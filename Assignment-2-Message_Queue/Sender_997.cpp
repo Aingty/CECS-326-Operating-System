@@ -31,7 +31,7 @@ int main()
 	struct buf 
 	{
 		long mtype; // required
-		char message(50); // mesg content
+		char message[50]; // mesg content
 	};
 	buf msg;
 	int size = sizeof(msg)-sizeof(long);
@@ -50,14 +50,14 @@ int main()
 		messageContent = "997: " + to_string(number);
 
 		cout << "Sending to Reciever 1: " << messageContent;
-		msg.message = messageContent;
+		strcpy(msg.message, messageContent.c_str());
 		msg.mtype = 117;
 		cout << 
 			msgsnd(qid, (struct msgbuf *)&msg, size, 0);
 			cout << endl;
 
 		cout << "Sending to Reciever 2: " << messageContent;
-		msg.message = messageContent;
+		strcpy(msg.message, messageContent.c_str());
 		msg.mtype = 118;
 		cout << 
 			msgsnd(qid, (struct msgbuf *)&msg, size, 0);
@@ -66,10 +66,10 @@ int main()
 
 		cout << "\nWaiting For Reciever 1 to recieve . . . " << endl;
 		msgrcv(qid, (struct msgbuf *)&msg, size, 1, 0);
-		cout << "Message Recieved." << endl;
+		cout << "Message Recieved." << endl << endl;
 		cout << "\nWaiting For Reciever 2 to recieve . . . " << endl;
-		msgrcv(qid, (struct msgbuf *)&msg, size, 1, 0);
-		cout << "Message Recieved." << endl;
+		msgrcv(qid, (struct msgbuf *)&msg, size, 2, 0);
+		cout << "Message Recieved." << endl << endl;
 
 	} while(number > 100);
     return 0;
