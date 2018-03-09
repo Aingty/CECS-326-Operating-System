@@ -31,7 +31,7 @@ int main()
 	struct buf 
 	{
 		long mtype; // required
-		char message(50); // mesg content
+		char message[50]; // mesg content
 	};
 	buf msg;
 	int size = sizeof(msg)-sizeof(long);
