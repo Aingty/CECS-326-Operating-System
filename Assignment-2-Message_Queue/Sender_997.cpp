@@ -42,8 +42,9 @@ int main()
 	do{
 		
 		do{
-			number = (rand() % 100000) % 997;
-		}while (number != 0);
+			randomNum = rand() % 100000;
+			number = randomNum;
+		}while (randomNum % 997 != 0);
 
 		messageContent = "997: " + to_string(number);
 
