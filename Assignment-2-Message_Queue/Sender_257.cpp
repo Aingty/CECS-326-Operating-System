@@ -21,7 +21,8 @@ int main()
 
 	// Variables to use
 	string decision;
-
+	int value;
+	
     // Grabbing the existing queue from the other program
     int qid = msgget(ftok(".",'u'), 0);
 
@@ -42,7 +43,7 @@ int main()
 
 	while(msg.receiverRunning)
 	{
-		int value = rand();
+		value = rand();
 
 		if(value % 257 == 0)
 		{
@@ -50,8 +51,8 @@ int main()
 			strcpy(msg.message, m.c_str());
 			msg.mtype = 118;
 			msgsnd(qid, (struct msgbuf *)&msg, size, 0);
+			msgrcv(qid, (struct msgbuf *)&msg, size, 118, 0);
 		}
-		msgrcv(qid, (struct msgbuf *)&msg, size, 118, 0);
 	}
 	cout << "Receiver 2 Ended, so quiting now....."<<endl;
     return 0;
