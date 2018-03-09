@@ -44,7 +44,7 @@ int main()
         messageFromQueue = msg.message;
 				identifier = messageFromQueue.substr(0,3);
         realMessage = messageFromQueue.substr(5);
-
+				cout << identifier <<endl;
 				if(msgRcvdCount==5000)	//quits on the max messages recieved = 5000
 				{
 						msg.receiverRunning = false;
