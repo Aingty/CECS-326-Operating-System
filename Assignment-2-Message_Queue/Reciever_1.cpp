@@ -9,37 +9,37 @@
 
 using namespace std;
 
-bool validateInput(string);
-
 int main() 
 {
     // Booleans for Menu
 	bool keepGoing = true;
 
 	// Variables to use
-	string decision;
     string messageFromQueue;
-    
+    string identifier;
+	string realMessage;
+
     // Using ftok() to generate a queue
 	int qid = msgget(ftok(".",'u'), IPC_EXCL|IPC_CREAT|0600);
-    cout << "Queue Created, now waiting....." <<endl;
+    cout << "Queue Created, now waiting.....\n" <<endl;
 
     // declare my message buffer and its size
 	struct buf 
 	{
 		long mtype; // required
-		string message; // mesg content
+		char message[50]; // mesg content
 	};
 	buf msg;
 	int size = sizeof(msg)-sizeof(long);
 
     while(keepGoing)
     {
-        cout << 
         msgrcv(qid, (struct msgbuf *)&msg, size, 117, 0);
-        cout << " bytes "<<endl;
         messageFromQueue = msg.message;
-        if(messageFromQueue.compare("quit") == 0)
+        identifier = messageFromQueue.substr(0,3);
+        realMessage = messageFromQueue.substr(5);
+
+        if(realMessage.compare("quit") == 0)
         {
             keepGoing = false;
             cout << "\nQuiting Program....."<<endl;
@@ -49,9 +49,18 @@ int main()
         }
         else
         {
-            cout << "Message Received: "<<msg.message<<endl;
+            if (identifier.compare("997"))
+            {
+                cout << identifier <<"'s Message Received: "<< realMessage <<endl;
+                strcpy(msg.message, "Roger Roger from Receiver 1");
+                msg.mtype = 1;
+			    msgsnd(qid, (struct msgbuf *)&msg, size, 0);
+            }
+            else
+            {
+                cout << identifier <<"'s Message Received: "<< realMessage <<endl;
+            }
         }
-
     }
     return 0;
 }
