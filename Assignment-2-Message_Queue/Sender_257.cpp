@@ -52,7 +52,7 @@ int main()
 			strcpy(msg.message, m.c_str());
 			msg.mtype = 118;
 			msgsnd(qid, (struct msgbuf *)&msg, size, 0);
-			msgrcv(qid, (struct msgbuf *)&msg, size, 118, 0);
+			msgrcv(qid, (struct msgbuf *)&msg, size, 120, 0);
 		}
 	}
 	cout << "\nReceiver 2 Ended, so quiting now....."<<endl;

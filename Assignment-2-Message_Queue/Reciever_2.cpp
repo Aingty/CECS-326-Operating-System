@@ -48,8 +48,8 @@ int main()
 				if(msgRcvdCount==5000)	//quits on the max messages recieved = 5000
 				{
 						msg.receiverRunning = false;
-						msg.mtype = 118;
-						msgsnd(qid, (struct msgbuf *)&msg, size, 118);
+						msg.mtype = 120;
+						msgsnd(qid, (struct msgbuf *)&msg, size, 0);
             keepGoing = false;
             cout << "\nQuiting Program....."<<endl;
         }
@@ -65,8 +65,8 @@ int main()
         {
 					msgRcvdCount++;
           cout << identifier << "'s Message Received: "<<realMessage<<endl;
-					msg.mtype = 118;
-					msgsnd(qid, (struct msgbuf *)&msg, size, 118);
+					msg.mtype = 120;
+					msgsnd(qid, (struct msgbuf *)&msg, size, 0);
         }
 
     }
