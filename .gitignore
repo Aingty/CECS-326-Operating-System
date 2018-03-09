@@ -4,7 +4,7 @@
 # Compiled Object files
 *.slo
 *.lo
-*.o
+#*.o <--- We need to have .o files for Assignment 2 to apply patch Code
 *.obj
 
 # Precompiled Headers
