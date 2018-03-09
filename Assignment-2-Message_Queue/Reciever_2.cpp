@@ -53,7 +53,7 @@ int main()
             keepGoing = false;
             cout << "\nQuiting Program....."<<endl;
         }
-				else if(identifier.compare("997"))
+				else if(identifier.compare("997")== 0)
 				{
 					msgRcvdCount++;
 					cout << identifier <<"'s Message Received: "<< realMessage <<endl;
