@@ -49,7 +49,7 @@ int main()
         }
         else
         {
-            if (identifier.compare("997"))
+            if (identifier.compare("997") == 0)
             {
                 cout << identifier <<"'s Message Received: "<< realMessage <<endl;
                 strcpy(msg.message, "Roger Roger from Receiver 1");
