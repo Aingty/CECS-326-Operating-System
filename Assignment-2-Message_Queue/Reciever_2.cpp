@@ -58,7 +58,7 @@ int main()
 					msgRcvdCount++;
 					cout << identifier <<"'s Message Received: "<< realMessage <<endl;
           strcpy(msg.message, "Roger Roger from Receiver 2");
-          msg.mtype = 1;
+          msg.mtype = 2;
 			    msgsnd(qid, (struct msgbuf *)&msg, size, 0);
 				}
         else
