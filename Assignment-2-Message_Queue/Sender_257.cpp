@@ -51,9 +51,8 @@ int main()
 			msg.mtype = 118;
 			msgsnd(qid, (struct msgbuf *)&msg, size, 0);
 		}
+		msgrcv(qid, (struct msgbuf *)&msg, size, 118, 0);
 	}
-
-	exit(0);
-
+	cout << "Receiver 2 Ended, so quiting now....."<<endl;
     return 0;
 }

@@ -27,12 +27,15 @@ int main()
 	{
 		long mtype; // required
 		char message[50]; // mesg content
+		bool receiverRunning; // flag to check receiver
+
 	};
 
 	buf msg;	//initializes instance of buffer
 	int size = sizeof(msg)-sizeof(long);
 	int msgRcvdCount=0;
-	
+	msg.receiverRunning = true;
+
 	// Grabbing the existing queue from the other program
 	int qid = msgget(ftok(".",'u'), 0);
     while(keepGoing)
@@ -44,6 +47,9 @@ int main()
 
 				if(msgRcvdCount==5000)	//quits on the max messages recieved = 5000
 				{
+						msg.receiverRunning = false;
+						msg.mtype = 118;
+						msgsnd(qid, (struct msgbuf *)&msg, size, 118);
             keepGoing = false;
             cout << "\nQuiting Program....."<<endl;
         }
@@ -59,6 +65,8 @@ int main()
         {
 					msgRcvdCount++;
           cout << "Message Received: "<<msg.message<<endl;
+					msg.mtype = 118;
+					msgsnd(qid, (struct msgbuf *)&msg, size, 118);
         }
 
     }
