@@ -39,6 +39,7 @@ int main()
 	cout << "Welcome Sender 997"<<endl;
 
 	int number = 0;
+	int randomNum = 0;
 	do{
 		
 		do{
