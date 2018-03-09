@@ -46,7 +46,7 @@ int main()
 
 		if(value % 257 == 0)
 		{
-			string m = "257: " + value;
+			string m = "257: " + to_string(value);
 			strcpy(msg.message, m.c_str());
 			msg.mtype = 118;
 			msgsnd(qid, (struct msgbuf *)&msg, size, 0);
