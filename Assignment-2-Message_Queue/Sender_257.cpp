@@ -22,7 +22,7 @@ int main()
 	// Variables to use
 	string decision;
 	int value;
-	
+
     // Grabbing the existing queue from the other program
     int qid = msgget(ftok(".",'u'), 0);
 
@@ -47,6 +47,7 @@ int main()
 
 		if(value % 257 == 0)
 		{
+			cout << "Sended : "<< value <<endl;
 			string m = "257: " + to_string(value);
 			strcpy(msg.message, m.c_str());
 			msg.mtype = 118;
@@ -54,6 +55,6 @@ int main()
 			msgrcv(qid, (struct msgbuf *)&msg, size, 118, 0);
 		}
 	}
-	cout << "Receiver 2 Ended, so quiting now....."<<endl;
+	cout << "\nReceiver 2 Ended, so quiting now....."<<endl;
     return 0;
 }
