@@ -38,13 +38,13 @@ int main()
 
 	// Grabbing the existing queue from the other program
 	int qid = msgget(ftok(".",'u'), 0);
+	cout << "Queue Found, now waiting.....\n" <<endl;
     while(keepGoing)
     {
         msgrcv(qid, (struct msgbuf *)&msg, size, 118, 0);
         messageFromQueue = msg.message;
 				identifier = messageFromQueue.substr(0,3);
         realMessage = messageFromQueue.substr(5);
-				cout << identifier <<endl;
 				if(msgRcvdCount==5000)	//quits on the max messages recieved = 5000
 				{
 						msg.receiverRunning = false;
