@@ -64,7 +64,7 @@ int main()
         else
         {
 					msgRcvdCount++;
-          cout << identifer << "'s Message Received: "<<msg.message<<endl;
+          cout << identifier << "'s Message Received: "<<msg.message<<endl;
 					msg.mtype = 118;
 					msgsnd(qid, (struct msgbuf *)&msg, size, 118);
         }
