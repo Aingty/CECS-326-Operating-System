@@ -68,7 +68,7 @@ int main()
 		msgrcv(qid, (struct msgbuf *)&msg, size, 1, 0);
 		cout << "Message Recieved." << endl << endl;
 		cout << "\nWaiting For Reciever 2 to recieve . . . " << endl;
-		msgrcv(qid, (struct msgbuf *)&msg, size, 1, 0);
+		msgrcv(qid, (struct msgbuf *)&msg, size, 2, 0);
 		cout << "Message Recieved." << endl << endl;
 
 	} while(number > 100);
