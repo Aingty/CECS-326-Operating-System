@@ -12,12 +12,10 @@ using namespace std;
 int main() 
 {
     // Booleans for Menu
-	bool keepGoing = true;
+    bool keepGoing = true;
 
 	// Variables to use
-    string messageFromQueue;
-    string identifier;
-	string realMessage;
+    string messageFromQueue, identifier, realMessage;
 
     // Grabbing the existing queue from the other program
 	int qid = msgget(ftok(".",'u'), 0);
