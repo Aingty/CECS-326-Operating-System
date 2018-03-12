@@ -47,11 +47,17 @@ int main()
         realMessage = messageFromQueue.substr(5);
 				if(msgRcvdCount==5000)	//quits on the max messages recieved = 5000
 				{
+						// Sending quit to 257
 						msg.receiverRunning = false;
 						msg.mtype = 120;
 						msgsnd(qid, (struct msgbuf *)&msg, size, 0);
-            keepGoing = false;
+
+						// Sending quit to Queue Center
+						msg.mtype = 326;
+						strcpy(msg.message, "Receiver 2 Exited Successfully!!");
+						msgsnd(qid, (struct msgbuf *)&msg, size, 0);
             cout << "\nQuiting Program....."<<endl;
+            keepGoing = false;
         }
 				else if(identifier.compare("997") == 0)
 				{

@@ -19,9 +19,9 @@ int main()
     string identifier;
 	string realMessage;
 
-    // Using ftok() to generate a queue
-	int qid = msgget(ftok(".",'u'), IPC_EXCL|IPC_CREAT|0600);
-    cout << "Queue Created, now waiting.....\n" <<endl;
+    // Grabbing the existing queue from the other program
+	int qid = msgget(ftok(".",'u'), 0);
+	cout << "Queue Found, now waiting.....\n" <<endl;
 
     // declare my message buffer and its size
 	struct buf 
@@ -41,11 +41,13 @@ int main()
 
         if(realMessage.compare("quit") == 0)
         {
-            keepGoing = false;
-            cout << "\nQuiting Program....."<<endl;
+            // Sending Quit to Queue Center
+            strcpy(msg.message, "Receiver 1 Exited Successfully!");
+            msg.mtype = 326;
+            msgsnd(qid, (struct msgbuf *)&msg, size, 0);
 
-            // now safe to delete message queue
-	        msgctl (qid, IPC_RMID, NULL);
+            cout << "\nQuiting Program....."<<endl;
+            keepGoing = false;
         }
         else
         {
