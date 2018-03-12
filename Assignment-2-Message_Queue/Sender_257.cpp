@@ -12,11 +12,11 @@
 using namespace std;
 
 bool validateInput(string);
+int rand();
 
 int main()
 {
 	// Setting the seed for a random generator
-    int rand();
     srand (time(NULL));
 
 	// Variables to use
