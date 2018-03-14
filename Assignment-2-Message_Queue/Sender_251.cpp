@@ -9,7 +9,7 @@
 #include <time.h>
 #include <signal.h>
 #include <unistd.h>
-#include "get_info.cpp"
+#include "Get_Info.cpp"
 
 using namespace std;
 
