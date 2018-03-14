@@ -41,14 +41,14 @@ int main()
     int qid = msgget(ftok(".",'u'), 0);
 	
 
+	strcpy(msg.message, "251: quit");
+	msg.mtype = 117;
+	// Patch Code to terminate Receiver 1 after kill command
+	get_info(qid, (struct msgbuf *)&msg, size, 117);
 
 	cout << "Welcome Sender 251"<<endl;
 	while(keepGoing)
 	{
-		strcpy(msg.message, "251: quit");
-		msg.mtype = 117;
-		// Patch Code to terminate Receiver 1 after kill command
-		get_info(qid, (struct msgbuf *)&msg, size, 117);
 		//cout << "Randomizing Integer and sending 5 valid markers...." <<endl;
 		int tempNumber = rand();
 		if (tempNumber % 251 == 0)
