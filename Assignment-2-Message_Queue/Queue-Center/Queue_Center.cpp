@@ -28,6 +28,7 @@ int main()
 	buf msg;	//initializes instance of buffer
 	int size = sizeof(msg)-sizeof(long);
 
+    // Waiting on Receivers to end before clearing queue
     msgrcv(qid, (struct msgbuf *)&msg, size, 326, 0);
 
     cout << msg.message << endl;
