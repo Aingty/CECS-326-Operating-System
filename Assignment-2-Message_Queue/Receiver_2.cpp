@@ -52,6 +52,11 @@ int main()
 						msg.mtype = 120;
 						msgsnd(qid, (struct msgbuf *)&msg, size, 0);
 
+						// Sending Quit to 997
+            strcpy(msg.message, "Receiver 2 Quitted");
+            msg.mtype = 2;
+            msgsnd(qid, (struct msgbuf *)&msg, size, 0);
+
 						// Sending quit to Queue Center
 						msg.mtype = 326;
 						strcpy(msg.message, "Receiver 2 Exited Successfully!!");

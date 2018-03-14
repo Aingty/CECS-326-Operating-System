@@ -39,6 +39,11 @@ int main()
 
         if(realMessage.compare("quit") == 0)
         {
+            // Sending Quit to 997
+            strcpy(msg.message, "Receiver 1 Quitted");
+            msg.mtype = 1;
+            msgsnd(qid, (struct msgbuf *)&msg, size, 0);
+
             // Sending Quit to Queue Center
             strcpy(msg.message, "Receiver 1 Exited Successfully!");
             msg.mtype = 326;

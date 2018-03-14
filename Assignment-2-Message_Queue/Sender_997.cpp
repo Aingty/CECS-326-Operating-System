@@ -11,11 +11,11 @@
 using namespace std;
 
 bool validateInput(string);
+int rand();
 
 int main()
 {
 	// Setting the seed for a random generator
-    int rand();
     srand (time(NULL));
 
 	// Booleans for Menu
@@ -40,6 +40,9 @@ int main()
 
 	int number = 0;
 	int randomNum = 0;
+	bool receiver1_alive = true;
+	bool receiver2_alive = true;
+
 	do{
 		
 		do{
@@ -48,28 +51,55 @@ int main()
 		}while (randomNum % 997 != 0);
 
 		messageContent = "997: " + to_string(number);
-
-		cout << "Sending to Reciever 1: " << messageContent;
-		strcpy(msg.message, messageContent.c_str());
-		msg.mtype = 117;
-		cout << 
-			msgsnd(qid, (struct msgbuf *)&msg, size, 0);
-			cout << endl;
-
-		cout << "Sending to Reciever 2: " << messageContent;
-		strcpy(msg.message, messageContent.c_str());
-		msg.mtype = 118;
-		cout << 
-			msgsnd(qid, (struct msgbuf *)&msg, size, 0);
-			cout << endl;
 		
-
-		cout << "\nWaiting For Reciever 1 to recieve . . . " << endl;
-		msgrcv(qid, (struct msgbuf *)&msg, size, 1, 0);
-		cout << "Message Recieved." << endl << endl;
-		cout << "\nWaiting For Reciever 2 to recieve . . . " << endl;
-		msgrcv(qid, (struct msgbuf *)&msg, size, 2, 0);
-		cout << "Message Recieved." << endl << endl;
+		// Sending to Receivers
+		if (receiver1_alive)
+		{
+			cout << "Sending to Receiver 1: " << messageContent;
+			strcpy(msg.message, messageContent.c_str());
+			msg.mtype = 117;
+			cout << msgsnd(qid, (struct msgbuf *)&msg, size, 0);
+			cout << endl;
+		}
+		if (receiver2_alive)
+		{
+			cout << "Sending to Receiver 2: " << messageContent;
+			strcpy(msg.message, messageContent.c_str());
+			msg.mtype = 118;
+			cout << msgsnd(qid, (struct msgbuf *)&msg, size, 0);
+			cout << endl;
+		}
+		
+		if (receiver1_alive)
+		{
+			cout << "\nWaiting For Receiver 1 to receive . . . " << endl;
+			msgrcv(qid, (struct msgbuf *)&msg, size, 1, 0);
+			messageContent = msg.message;
+			if (messageContent.compare("Receiver 1 Quitted") == 0)
+			{
+				receiver1_alive = false;
+				cout << msg.message << endl <<endl;
+			}
+			else
+			{
+				cout << "Message Recieved." << endl << endl;
+			}
+		}
+		if (receiver2_alive)
+		{
+			cout << "\nWaiting For Receiver 2 to receive . . . " << endl;
+			msgrcv(qid, (struct msgbuf *)&msg, size, 2, 0);
+			messageContent = msg.message;
+			if (messageContent.compare("Receiver 2 Quitted") == 0)
+			{
+				receiver2_alive = false;
+				cout << msg.message << endl <<endl;
+			}
+			else
+			{
+				cout << "Message Recieved." << endl << endl;
+			}
+		}
 
 	} while(number > 100);
     return 0;

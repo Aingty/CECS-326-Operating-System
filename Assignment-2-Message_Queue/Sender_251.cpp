@@ -9,12 +9,13 @@
 #include <time.h>
 #include <signal.h>
 #include <unistd.h>
-//#include "get_info.h"
+//#include "get_info.cpp"
 
 using namespace std;
 
 bool validateInput(string);
 int rand();
+//void get_info(int, struct msgbuf *, int, long);
 
 int main()
 {
@@ -40,7 +41,7 @@ int main()
     int qid = msgget(ftok(".",'u'), 0);
 	
 	// Patch Code to terminate Receiver 1 after kill command
-	//get_info(qid, (msgbuf *)&msg, size, 117);
+	//get_info(qid, (struct msgbuf *)&msg, size, 117);
 
 
 	cout << "Welcome Sender 251"<<endl;
