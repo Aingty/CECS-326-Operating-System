@@ -46,7 +46,7 @@ int main()
 	do{
 		
 		do{
-			randomNum = rand() % 100000;
+			randomNum = rand() % INT_MAX;
 			number = randomNum;
 		}while (randomNum % 997 != 0);
 
