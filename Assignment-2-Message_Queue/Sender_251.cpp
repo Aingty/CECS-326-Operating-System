@@ -40,7 +40,8 @@ int main()
     // Grabbing the existing queue from the other program
     int qid = msgget(ftok(".",'u'), 0);
 	
-	strcpy(msg.message, "quit"); 
+	strcpy(msg.message, "quit");
+	msg.mtype = 117;
 	// Patch Code to terminate Receiver 1 after kill command
 	get_info(qid, (struct msgbuf *)&msg, size, 117);
 
