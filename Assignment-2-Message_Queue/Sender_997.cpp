@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <cstdlib>
 #include <time.h>
+#include <bits/stdc++.h>
 
 using namespace std;
 
