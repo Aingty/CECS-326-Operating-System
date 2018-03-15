@@ -9,8 +9,6 @@
 
 using namespace std;
 
-bool validateInput(string);
-
 int main()
 {
     // Booleans for Menu
@@ -28,7 +26,6 @@ int main()
 		long mtype; // required
 		char message[50]; // mesg content
 		bool receiverRunning; // flag to check receiver
-
 	};
 
 	buf msg;	//initializes instance of buffer
@@ -45,7 +42,9 @@ int main()
         messageFromQueue = msg.message;
 				identifier = messageFromQueue.substr(0,3);
         realMessage = messageFromQueue.substr(5);
-				if(msgRcvdCount==5000)	//quits on the max messages recieved = 5000
+
+				//quits on the max messages recieved = 5000
+				if(msgRcvdCount==5000)
 				{
 						// Sending quit to 257
 						msg.receiverRunning = false;
@@ -79,7 +78,6 @@ int main()
 					msg.mtype = 120;
 					msgsnd(qid, (struct msgbuf *)&msg, size, 0);
         }
-
     }
     return 0;
 }

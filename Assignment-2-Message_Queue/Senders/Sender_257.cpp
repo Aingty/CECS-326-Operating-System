@@ -11,7 +11,6 @@
 
 using namespace std;
 
-bool validateInput(string);
 int rand();
 
 int main()
@@ -44,7 +43,6 @@ int main()
 	while(msg.receiverRunning)
 	{
 		value = rand();
-
 		if(value % 257 == 0)
 		{
 			cout << "Sended : "<< value <<endl;

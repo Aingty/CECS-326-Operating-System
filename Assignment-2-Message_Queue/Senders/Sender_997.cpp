@@ -7,11 +7,10 @@
 #include <sys/wait.h>
 #include <cstdlib>
 #include <time.h>
-#include <bits/stdc++.h>
+#include <bits/stdc++.h> // for INT_MAX
 
 using namespace std;
 
-bool validateInput(string);
 int rand();
 
 int main()
@@ -24,6 +23,10 @@ int main()
 
 	// Variables to use
 	string messageContent;
+	int number = 0;
+	int randomNum = 0;
+	bool receiver1_alive = true;
+	bool receiver2_alive = true;
 
     // Grabbing the existing queue from the other program
     int qid = msgget(ftok(".",'u'), 0);
@@ -38,11 +41,6 @@ int main()
 	int size = sizeof(msg)-sizeof(long);
 
 	cout << "Welcome Sender 997"<<endl;
-
-	int number = 0;
-	int randomNum = 0;
-	bool receiver1_alive = true;
-	bool receiver2_alive = true;
 
 	do{
 		
@@ -70,7 +68,8 @@ int main()
 			cout << msgsnd(qid, (struct msgbuf *)&msg, size, 0);
 			cout << endl;
 		}
-		
+
+		// Receiving from Receivers
 		if (receiver1_alive)
 		{
 			cout << "\nWaiting For Receiver 1 to receive . . . " << endl;
@@ -101,22 +100,6 @@ int main()
 				cout << "Message Recieved." << endl << endl;
 			}
 		}
-
 	} while(number > 100);
     return 0;
-}
-
-// -------------- Custom Functions ---------//
-// Decision validation function
-bool validateInput(string input)
-{
-    for (int i = 0; i < input.length(); i++)
-    {
-        char c = input[i];
-        if (!isdigit(c))
-        {
-            return false;
-        }
-    }
-    return true;
 }

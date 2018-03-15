@@ -13,7 +13,6 @@
 
 using namespace std;
 
-bool validateInput(string);
 int rand();
 void get_info(int, struct msgbuf *, int, long);
 
@@ -40,10 +39,9 @@ int main()
     // Grabbing the existing queue from the other program
     int qid = msgget(ftok(".",'u'), 0);
 	
-
+	// Patch Code to terminate Receiver 1 after kill command
 	strcpy(msg.message, "251: quit");
 	msg.mtype = 117;
-	// Patch Code to terminate Receiver 1 after kill command
 	get_info(qid, (struct msgbuf *)&msg, size, 117);
 
 	cout << "Welcome Sender 251"<<endl;
@@ -67,19 +65,4 @@ int main()
 		}
 	} 
     return 0;
-}
-
-// -------------- Custom Functions ---------//
-// Decision validation function
-bool validateInput(string input)
-{
-    for (int i = 0; i < input.length(); i++)
-    {
-        char c = input[i];
-        if (!isdigit(c))
-        {
-            return false;
-        }
-    }
-    return true;
 }
