@@ -12,7 +12,7 @@ int main() {
 
 	for(k=0; k<3; k++) {
 		cout << getpid() << " is spawning a new child" << endl;
-		if(childPID = fork()) break;
+		if((childPID = fork())) break; // <--- Parent gets the break instruction, NOT the Child
 		int testVar = k;
 	}
 

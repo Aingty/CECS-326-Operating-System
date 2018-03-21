@@ -12,13 +12,13 @@ int main() {
 	cout << "1\n2\n3\n";
 
 	childPID = fork();
-	if(childPID > 0) {
+	if(childPID > 0) { // <---- parent will find it true, but child will see it false
 		int Pvar = 20;
 		PCvar = 30;
 		cout << "Parent process: pid " << getpid()
 			<< ", ppid " << getppid()
 			<< ", child " << childPID << endl;
-	} else if (childPID == 0) {
+	} else if (childPID == 0) { // <---- so child will execute this portion
 		int Cvar = 400;
 		PCvar = 500;
 		cout << "Child process: pid " << getpid()

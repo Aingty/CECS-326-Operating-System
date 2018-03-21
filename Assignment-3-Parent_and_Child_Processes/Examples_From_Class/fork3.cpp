@@ -1,7 +1,7 @@
 //binary fork
 
 #include <unistd.h>
-#include <stdlib>
+#include <cstdlib>
 #include <iostream>
 using namespace std;
 
