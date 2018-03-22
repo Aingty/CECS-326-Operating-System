@@ -5,7 +5,7 @@
 #include <cstdlib>
 using namespace std;
 
-int main() {
+int main() { //testing
 
 	long childPID;
 	int PCvar = 10;
