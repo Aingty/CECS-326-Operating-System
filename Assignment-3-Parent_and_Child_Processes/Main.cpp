@@ -1,47 +1,94 @@
 #include <iostream>
 #include <cstdlib>
 #include <time.h>
+#include <fstream>
+#include <sstream>
+
 using namespace std;
 
-void printArticle();
+string replaceAll(string, string, string);
 
 int main()
 {
-    string article = "An operating system (OS) is system software that manages computer hardware and software 
-    resources and provides common services for computer programs. Time-sharing operating systems schedule 
-    tasks for efficient use of the system and may also include accounting software for cost allocation of 
-    processor time, mass storage, printing, and other resources. For hardware functions such as input and 
-    output and memory allocation, the operating system acts as an intermediary between programs and the 
-    computer hardware, although the application code is usually executed directly by the hardware and 
-    frequently makes system calls to an OS function or is interrupted by it. Operating systems are found on 
-    many devices that contain a computer – from cellular phones and video game consoles to web servers and 
-    supercomputers.";
+    // Declaring the article file
+    ifstream inFile;
+    inFile.open("article.txt");
+
+    long childPID;
+    
+    // Variables to use in program
+    string fullArticle, lineOfArticle, target, replace, response;
+    bool keepGoing = true;
+    
+    // If text file is not there
+    if (!inFile) 
+    {
+        cout << "Unable to open file!!!";
+        exit(1);
+    }
+
+    // Writting text file content into a string variable
+    while (inFile >> lineOfArticle) 
+    {
+        fullArticle = fullArticle + " " + lineOfArticle;
+    }
 
     cout << "\nWelcome to the Parent and Child Processes w/ fork & wait Program!!"<<endl;
-    cout << "\n\t\t\t\t\t\t\tArticle From Wikipedia"<<endl;
-    printArticle();   
+    while(keepGoing)
+    {
 
+        cout << "\n\n\t\t\t\t\t\t\t\t\t\tArticle From Wikipedia:"<<endl;
+        cout << fullArticle <<"\n\n"<<endl;
 
+        cout << "Target String: ";
+        getline(cin, target);
 
+        // When user wants to quit
+        if (target.compare("!wq")==0)
+        {
+            cout << "Thank You! GoodBye!! :)" <<endl;
+            exit(1);
+        }
+        // When user's target is not in string
+        if (fullArticle.find(target) == string::npos)
+        {
+            cout << "\nUnable to find your target string!!! Please try again!"<<endl;
+            continue;
+        }
 
+        cout << "Replacement String: ";
+        getline(cin, replace);
+        fullArticle = replaceAll(fullArticle, target, replace);
+    }
+    inFile.close();
     return 0;
 }
 
 //--------------------------------------------------//
-// Function to Print the Article
-void printArticle()
+// Find and Replace string function for Program
+string replaceAll(string article, string target, string replacement)
 {
-    cout << "\tAn operating system (OS) is system software that manages computer hardware and software resources and provides common services for computer programs.\n"
-         << "\tTime-sharing operating systems schedule tasks for efficient use of the system and may also include accounting software for cost allocation of processor\n"
-         << "time, mass storage, printing, and other resources.\n"
-         << "\tFor hardware functions such as input and output and memory allocation, the operating system acts as an intermediary between programs and the computer\n"
-         << "hardware, although the application code is usually executed directly by the hardware and frequently makes system calls to an OS function or is\n"
-         << "interrupted by it. Operating systems are found on many devices that contain a computer – from cellular phones and video game consoles to web servers\n"
-         << "and supercomputers.\n"
-         << "\tThe dominant desktop operating system is Microsoft Windows with a market share of around 82.74\%. macOS by Apple Inc.is in second place (13.23\%),\n" 
-         << "and the varieties of Linux are collectively in third place (1.57\%). In the mobile (smartphoneand tablet combined) sector, use in 2017 is up to 70\% of\n"
-         << "Google's Android and according to third quarter 2016 data, Android on smartphones is dominant with 87.5 percent and a growth rate 10.3 percent per year,\n"
-         << "followed by Apple's iOS with 12.1 percent and a per year decrease in market share of 5.2 percent, while other operating systems amount to just 0.3 percent.\n"
-         << "Linux distributions are dominant in the server and supercomputing sectors. Other specialized classes of operating systems, such as embedded and real-time\n"
-         << "systems, exist for many applications.\n"<<endl;
+    string newArticle, puncuation, temp;
+    bool ispuncuated = false;
+    istringstream iss(article);
+    while(iss >> temp)
+    {
+        if (!isalpha(temp[temp.size()-1]))
+        {
+            puncuation = temp[temp.size()-1];
+            temp = temp.substr(0,temp.size()-1);
+            ispuncuated = true;
+        }
+        if (temp.compare(target)==0)
+        {
+            temp = replacement;
+        }
+        if (ispuncuated)
+        {
+            temp = temp + puncuation;
+            ispuncuated = false;
+        }
+        newArticle = newArticle + " " + temp;
+    }
+    return newArticle;
 }

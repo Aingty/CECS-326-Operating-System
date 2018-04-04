@@ -1,0 +1,11 @@
+An operating system, aka OS, is system software that manages computer hardware and software resources and 
+provides common services for computer programs. Time-sharing operating systems schedule tasks for efficient 
+use of the system and may also include accounting software for cost allocation of processor time, mass 
+storage, printing, and other resources. For hardware functions such as input and output and memory allocation, 
+the operating system acts as an intermediary between programs and the computer hardware, although the 
+application code is usually executed directly by the hardware and frequently makes system calls to an OS 
+function or is interrupted by it. Operating systems are found on many devices that contain a computer from 
+cellular phones and video game consoles to web servers and supercomputers.
+Single-user operating systems have no facilities to distinguish users, but may allow multiple programs to run in tandem. A multi-user operating system extends the basic concept of multi-tasking with facilities that identify processes and resources, such as disk space, belonging to multiple users, and the system permits multiple users to interact with the system at the same time. Time-sharing operating systems schedule tasks for efficient use of the system and may also include accounting software for cost allocation of processor time, mass storage, printing, and other resources to multiple users.
+A distributed operating system manages a group of distinct computers and makes them appear to be a single computer. The development of networked computers that could be linked and communicate with each other gave rise to distributed computing. Distributed computations are carried out on more than one machine. When computers in a group work in cooperation, they form a distributed system.
+A real-time operating system is an operating system that guarantees to process events or data by a specific moment in time. A real-time operating system may be single- or multi-tasking, but when multitasking, it uses specialized scheduling algorithms so that a deterministic nature of behavior is achieved. An event-driven system switches between tasks based on their priorities or external events while time-sharing operating systems switch tasks based on clock interrupts.
