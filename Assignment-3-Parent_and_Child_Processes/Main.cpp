@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <iostream>
 #include <cstdlib>
 #include <time.h>
@@ -6,7 +7,7 @@
 
 using namespace std;
 
-string replaceAll(string, string, string);
+void replaceAll(string, string, string);
 
 int main()
 {
@@ -15,7 +16,7 @@ int main()
     inFile.open("article.txt");
 
     long childPID;
-    
+
     // Variables to use in program
     string fullArticle, lineOfArticle, target, replace, response;
     bool keepGoing = true;
@@ -58,7 +59,14 @@ int main()
 
         cout << "Replacement String: ";
         getline(cin, replace);
-        fullArticle = replaceAll(fullArticle, target, replace);
+
+        childPID = fork();
+        if (childPID == 0)
+        {
+            replaceAll(fullArticle, target, replace);
+            exit(1);
+        }  
+        wait(0); 
     }
     inFile.close();
     return 0;
@@ -66,8 +74,9 @@ int main()
 
 //--------------------------------------------------//
 // Find and Replace string function for Program
-string replaceAll(string article, string target, string replacement)
+void replaceAll(string article, string target, string replacement)
 {
+    int replacementCount = 0;
     string newArticle, puncuation, temp;
     bool ispuncuated = false;
     istringstream iss(article);
@@ -82,6 +91,7 @@ string replaceAll(string article, string target, string replacement)
         if (temp.compare(target)==0)
         {
             temp = replacement;
+            replacementCount++;
         }
         if (ispuncuated)
         {
@@ -90,5 +100,7 @@ string replaceAll(string article, string target, string replacement)
         }
         newArticle = newArticle + " " + temp;
     }
-    return newArticle;
+    cout << "\n\n\t\t\t\t\t\t\t\t\tNew Article From Wikipedia:"<<endl;
+    cout << newArticle <<endl;
+    cout << "Amount of Replacement: "<<replacementCount<<endl;
 }
