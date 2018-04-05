@@ -50,12 +50,6 @@ int main()
             cout << "Thank You! GoodBye!! :)" <<endl;
             exit(1);
         }
-        // When user's target is not in string
-        if (fullArticle.find(target) == string::npos)
-        {
-            cout << "\nUnable to find your target string!!! Please try again!"<<endl;
-            continue;
-        }
 
         cout << "Replacement String: ";
         getline(cin, replace);
@@ -79,26 +73,30 @@ void replaceAll(string article, string target, string replacement)
     int replacementCount = 0;
     string newArticle, puncuation, temp;
     bool ispuncuated = false;
-    istringstream iss(article);
-    while(iss >> temp)
+    while(replacementCount==0)
     {
-        if (!isalpha(temp[temp.size()-1]))
+        newArticle = "";
+        istringstream iss(article);
+        while(iss >> temp)
         {
-            puncuation = temp[temp.size()-1];
-            temp = temp.substr(0,temp.size()-1);
-            ispuncuated = true;
+            if (!isalpha(temp[temp.size()-1]))
+            {
+                puncuation = temp[temp.size()-1];
+                temp = temp.substr(0,temp.size()-1);
+                ispuncuated = true;
+            }
+            if (temp.compare(target)==0)
+            {
+                temp = replacement;
+                replacementCount++;
+            }
+            if (ispuncuated)
+            {
+                temp = temp + puncuation;
+                ispuncuated = false;
+            }
+            newArticle = newArticle + " " + temp;
         }
-        if (temp.compare(target)==0)
-        {
-            temp = replacement;
-            replacementCount++;
-        }
-        if (ispuncuated)
-        {
-            temp = temp + puncuation;
-            ispuncuated = false;
-        }
-        newArticle = newArticle + " " + temp;
     }
     cout << "\n\n\t\t\t\t\t\t\t\t\tNew Article From Wikipedia:"<<endl;
     cout << newArticle <<endl;
