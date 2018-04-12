@@ -73,12 +73,16 @@ void replaceAll(string article, string target, string replacement)
     int replacementCount = 0;
     string newArticle, puncuation, temp;
     bool ispuncuated = false;
+    // While loop of replacementCount == 0 for injected bug
+    //      Infinite loop when there is no word to replace
     while(replacementCount==0)
     {
         newArticle = "";
-        istringstream iss(article);
+        istringstream iss(article); //Use to iterate through the string to get one word at a time
         while(iss >> temp)
         {
+            // If statement to check if the word is at end of sentence IE: this word at END.
+            //    Then remove the puncuation so it compares "END" only but will add in later.
             if (!isalpha(temp[temp.size()-1]))
             {
                 puncuation = temp[temp.size()-1];
@@ -97,8 +101,12 @@ void replaceAll(string article, string target, string replacement)
             }
             newArticle = newArticle + " " + temp;
         }
+        if(replacementCount == 0)
+        {
+            cout << "..." << endl;
+        }
     }
-    cout << "\n\n\t\t\t\t\t\t\t\t\tNew Article From Wikipedia:"<<endl;
+    cout << "\n\n\t\t\t\t\t\t\t\t\t\tNew Article From Wikipedia:"<<endl;
     cout << newArticle <<endl;
-    cout << "Amount of Replacement: "<<replacementCount<<endl;
+    cout << "\n\tAmount of Replacement(s): "<<replacementCount<<endl;
 }
