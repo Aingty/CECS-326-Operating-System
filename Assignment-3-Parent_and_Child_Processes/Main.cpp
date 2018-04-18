@@ -78,17 +78,21 @@ void replaceAll(string article, string target, string replacement)
     while(replacementCount==0)
     {
         newArticle = "";
-        istringstream iss(article); //Use to iterate through the string to get one word at a time
+        //Use to iterate through the string to get one word at a time
+        istringstream iss(article);
         while(iss >> temp)
         {
             // If statement to check if the word is at end of sentence IE: this word at END.
-            //    Then remove the puncuation so it compares "END" only but will add in later.
+            //    Then remove the puncuation so it compares "END" only but will add puncuation later.
             if (!isalpha(temp[temp.size()-1]))
             {
                 puncuation = temp[temp.size()-1];
                 temp = temp.substr(0,temp.size()-1);
                 ispuncuated = true;
             }
+            // Transform the temporary string/word into all lowercase for comparison
+            transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+
             if (temp.compare(target)==0)
             {
                 temp = replacement;
