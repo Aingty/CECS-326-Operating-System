@@ -71,7 +71,7 @@ int main()
 void replaceAll(string article, string target, string replacement)
 {
     int replacementCount = 0;
-    string newArticle, puncuation, temp;
+    string newArticle, puncuation, temp, temp2;
     bool ispuncuated = false;
     // While loop of replacementCount == 0 for injected bug
     //      Infinite loop when there is no word to replace
@@ -90,10 +90,13 @@ void replaceAll(string article, string target, string replacement)
                 temp = temp.substr(0,temp.size()-1);
                 ispuncuated = true;
             }
+            temp2 = temp; // This is to prevent replacing all words to lowercase, 
+                         //  so have this to transform all to lowercase
+                         
             // Transform the temporary string/word into all lowercase for comparison
-            transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+            transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
 
-            if (temp.compare(target)==0)
+            if (temp2.compare(target)==0)
             {
                 temp = replacement;
                 replacementCount++;
