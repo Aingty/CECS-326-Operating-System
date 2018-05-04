@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <limits.h>
+#include <signal.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -15,84 +16,101 @@ using namespace std;
 const int U = 827395609;
 const int V = 962094883;
 
-enum {U_Taken, V_Taken}; // set up names of my 2 semaphores
+enum {mySemaphore}; // set up names of my 2 semaphores
+
 
 
 int rand();
 
-void producer_proc(SEMAPHORE &, char *);
-void parent_cleanup(SEMAPHORE &, int);
-void consumer_proc(SEMAPHORE &, char *);
+void calculate(SEMAPHORE &);
 
 int main(){
 	// Setting the seed for a random generator
 	srand (time(NULL));
 	
+	bool U_Taken = false;
+	bool V_Taken = false;
+
 	string decision;
-
-	int shmid;
-	char *shmBUF;
-
-	// Constructing an Object with 2 semaphores (sem are set to zero when initialize)
-	SEMAPHORE sem(2); 
-	// Incrementing each Semaphore by 1
-	sem.V(U_Taken); 
-	sem.V(V_Taken);
+	int arrayPID [4]; 
 	
-	// Spawn 4 children then wait for prompt
-	if(fork())
+	// Constructing an Object with 1 semaphore (sem is set to zero when initialize)
+	SEMAPHORE sem(1); 
+	// Incrementing Semaphore by 2
+	sem.V(mySemaphore); 
+	sem.V(mySemaphore);
+	
+	// Spawn 4 children then parent waits for prompt
+	if((arrayPID[0] = fork()))
 	{
-		if(fork())
+		if((arrayPID[1] = fork()))
 		{
-			if(fork())
+			if((arrayPID[2] = fork()))
 			{
-				if(fork())
+				if((arrayPID[3] = fork()))
 				{
 					do
 					{
 						cout << "(!wq to Quit) : ";
 						cin >> decision;
 					} while(decision.compare("!wq") != 0);
+					for(int i = 0; i <= 3; i++)
+					{
+						// Killing all Child Processes
+						kill(arrayPID[i], SIGKILL);
+					}
 				}
 				else
 				{
-					cout << "Testing4" << endl;
+
 				}
 			}
 			else
 			{
-				cout << "Testing3" << endl;
+
 			}
 		}
 		else
 		{
-			cout << "Testing2" << endl;
+			calculate(sem, &U_Taken, &V_Taken);
 		}
 	}
 	else
 	{
-		cout << "Testing" << endl;
+		calculate(sem, &U_Taken, &V_Taken);
 	}
-    
-
     return(0);
 }
 
 
 //-----------------------------------------------------//
-void consumer_proc(SEMAPHORE &sem, char *shmBUF) {
-	
-	
-	
+void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken) 
+{
+	int value;
+	bool *currTaken;
 	int randomGenerator;
 
+	if(*U_Taken == false)
+	{
+		value = U;
+		*U_Taken = true;
+		*currTaken = *U_Taken;
+	}
+	if(*V_Taken == false)
+	{
+		value = V;
+		*V_Taken = true;
+		*currTaken = *V_Taken;
+	}
+
+	sem.P(mySemaphore);
 	do
 	{
 		randomGenerator = rand();
 		cout << "Generated: " << randomGenerator << endl;
-
-	} while(randomGenerator <= 100); //|| randomGenerator%value==0);
-
+	} while(randomGenerator <= 100 || randomGenerator%value==0);
+	*currTaken = false;
+	sem.V(mySemaphore);
 
 	// char tmp;
 	// for(int k=0; k<MAXCHAR; k++){
@@ -105,22 +123,8 @@ void consumer_proc(SEMAPHORE &sem, char *shmBUF) {
 	// }
 } // child_proc
 
-void producer_proc(SEMAPHORE &sem, char *shmBUF) {
-
-	// char data[128];
-	// cout << "(" << getpid() << ")  Please enter a string --> ";
-	// cin.getline(data, 127);
-
-	// char input;
-	// for(int k=0; k<MAXCHAR; k++){
-	// 	input = data[k];
-	// 	sem.P(PUT_ITEM);
-	// 	*(shmBUF+(k%BUFFSIZE)) = input;
-	// 	sem.V(TAKE_ITEM);
-	// }
-} // parent_proc
-
-void parent_cleanup (SEMAPHORE &sem, int shmid) {
+void parent_cleanup (SEMAPHORE &sem, int shmid) 
+{
 
 	int status;			/* child status */
 	wait(0);	/* wait for child to exit */
