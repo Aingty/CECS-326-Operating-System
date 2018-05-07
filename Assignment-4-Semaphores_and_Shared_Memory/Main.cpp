@@ -111,7 +111,7 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 	// 	randomGenerator = rand();
 	// 	cout << "Generated: " << randomGenerator << endl;
 	// }
-	//*currTaken = false;
+	*currTaken = false;
 	cout << *U_Taken << endl;
 	//sem.V(mySemaphore);
 
