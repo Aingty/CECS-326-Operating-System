@@ -78,8 +78,8 @@ int main(){
 	else
 	{
 		calculate(sem, &U_Taken, &V_Taken);
+		cout << U_Taken << endl;
 	}
-	cout << U_Taken << endl;
     return(0);
 }
 
