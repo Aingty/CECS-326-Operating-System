@@ -89,7 +89,6 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 	int value;
 	bool *currTaken;
 	int randomGenerator = 111;
-	cout << "testing" << endl;
 	if(*U_Taken == false)
 	{
 		value = U;
@@ -98,6 +97,7 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 	}
 	if(*V_Taken == false)
 	{
+		cout << "testing" << endl;
 		value = V;
 		*V_Taken = true;
 		*currTaken = *V_Taken;
