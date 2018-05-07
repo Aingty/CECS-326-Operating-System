@@ -38,7 +38,7 @@ int main(){
 	SEMAPHORE sem(1); 
 	// Incrementing Semaphore by 2
 	sem.V(mySemaphore); 
-	sem.V(mySemaphore);
+	//sem.V(mySemaphore);
 	
 	// Spawn 4 children then parent waits for prompt
 	if((arrayPID[0] = fork()))
@@ -91,6 +91,7 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 	int value;
 	bool *currTaken;
 	int randomGenerator = 111;
+	sem.P(mySemaphore);
 	if(*U_Taken == false)
 	{
 		*U_Taken = true;
@@ -103,16 +104,15 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 		value = V;
 		currTaken = V_Taken;
 	}
+	sem.V(mySemaphore);
 	cout << "U: " << *U_Taken << endl;
 	cout << "V: " << *V_Taken << endl;
-	// sem.P(mySemaphore);
 	// while(randomGenerator <= 100 || randomGenerator%value == 0)
 	// {
 	// 	randomGenerator = rand();
 	// 	cout << "Generated: " << randomGenerator << endl;
 	// }
 	// *currTaken = false;
-	// sem.V(mySemaphore);
 
 } // child_proc
 
