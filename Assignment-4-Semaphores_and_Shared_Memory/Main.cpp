@@ -28,8 +28,8 @@ int main(){
 	// Setting the seed for a random generator
 	srand (time(NULL));
 	
-	bool U_Taken = false;
-	bool V_Taken = false;
+	int shmid;
+	char *shmBUF;
 
 	string decision;
 	int arrayPID [4]; 
@@ -40,6 +40,9 @@ int main(){
 	sem.V(mySemaphore); 
 	//sem.V(mySemaphore);
 	
+	// Allocate Memory
+	shmid = shmget(IPC_PRIVATE, BUFFSIZE*sizeof(char), PERMS);
+
 	// Spawn 4 children then parent waits for prompt
 	if((arrayPID[0] = fork()))
 	{
