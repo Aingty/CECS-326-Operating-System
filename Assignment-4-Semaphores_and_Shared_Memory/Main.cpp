@@ -94,7 +94,7 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 		*U_Taken = true;
 		cout << "testing" << endl;
 		value = U;
-		//*currTaken = U_Taken;
+		currTaken = U_Taken;
 		cout << "testing1" << endl;
 	}
 	if(*V_Taken == false)
