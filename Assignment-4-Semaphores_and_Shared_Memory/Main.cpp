@@ -62,17 +62,17 @@ int main(){
 				}
 				else
 				{
-					calculate(sem, &U_Taken, &V_Taken);			
+					//calculate(sem, &U_Taken, &V_Taken);			
 				}
 			}
 			else
 			{
-				calculate(sem, &U_Taken, &V_Taken);
+				//calculate(sem, &U_Taken, &V_Taken);
 			}
 		}
 		else
 		{
-			calculate(sem, &U_Taken, &V_Taken);
+			//calculate(sem, &U_Taken, &V_Taken);
 		}
 	}
 	else
