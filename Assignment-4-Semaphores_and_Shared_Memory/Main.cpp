@@ -72,13 +72,13 @@ int main(){
 		}
 		else
 		{
-			calculate(mySemaphore, &U_Taken, &V_Taken);
+			calculate(sem, &U_Taken, &V_Taken);
 			cout << U_Taken << " " << V_Taken << endl;
 		}
 	}
 	else
 	{
-		calculate(mySemaphore, &U_Taken, &V_Taken);
+		calculate(sem, &U_Taken, &V_Taken);
 		cout << U_Taken << " " << V_Taken << endl;
 	}
     return(0);
@@ -91,7 +91,7 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 	int value;
 	bool *currTaken;
 	int randomGenerator = 111;
-	sem.P(sem);
+	sem.P(mySemaphore);
 	if(*U_Taken == false)
 	{
 		*U_Taken = true;
@@ -104,7 +104,7 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 		value = V;
 		currTaken = V_Taken;
 	}
-	sem.V(sem);
+	sem.V(mySemaphore);
 	cout << "U: " << *U_Taken << endl;
 	cout << "V: " << *V_Taken << endl;
 	// while(randomGenerator <= 100 || randomGenerator%value == 0)
