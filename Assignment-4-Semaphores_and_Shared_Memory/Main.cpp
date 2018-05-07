@@ -73,11 +73,13 @@ int main(){
 		else
 		{
 			calculate(sem, &U_Taken, &V_Taken);
+			cout << U_Taken << " " << V_Taken << endl;
 		}
 	}
 	else
 	{
 		calculate(sem, &U_Taken, &V_Taken);
+		cout << U_Taken << " " << V_Taken << endl;
 	}
     return(0);
 }
