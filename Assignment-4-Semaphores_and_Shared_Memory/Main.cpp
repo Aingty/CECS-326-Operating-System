@@ -22,7 +22,7 @@ enum {mySemaphore}; // set up names of my 2 semaphores
 
 int rand();
 
-void calculate(SEMAPHORE &);
+void calculate(SEMAPHORE &, bool *, bool *);
 
 int main(){
 	// Setting the seed for a random generator
@@ -62,12 +62,12 @@ int main(){
 				}
 				else
 				{
-
+					calculate(sem, &U_Taken, &V_Taken);			
 				}
 			}
 			else
 			{
-
+				calculate(sem, &U_Taken, &V_Taken);
 			}
 		}
 		else
@@ -112,15 +112,6 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 	*currTaken = false;
 	sem.V(mySemaphore);
 
-	// char tmp;
-	// for(int k=0; k<MAXCHAR; k++){
-	// 	sem.P(TAKE_ITEM);
-	// 	tmp = *(shmBUF+k%BUFFSIZE); // shmBUF = shared memeory & k%BUFFSIZE = accese which memory (K = 0 --> 9) 
-	// 	sem.V(PUT_ITEM);			// However it is % of BUFFSIZE so K = 0,1,2,0,1,2,0,1,2.....
-	// 	cout << "(" << getpid() << ")  " 
-	// 			<< "buf[" << k%BUFFSIZE << "] "
-	// 			<< tmp << endl; // <--- this endl is important becasue it will flush buffer
-	// }
 } // child_proc
 
 void parent_cleanup (SEMAPHORE &sem, int shmid) 
