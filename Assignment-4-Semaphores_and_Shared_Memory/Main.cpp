@@ -72,12 +72,13 @@ int main(){
 		}
 		else
 		{
-			calculate(sem, &U_Taken, &V_Taken);
-			cout << U_Taken << " " << V_Taken << endl;
+			//calculate(sem, &U_Taken, &V_Taken);
+			//cout << U_Taken << " " << V_Taken << endl;
 		}
 	}
 	else
 	{
+		calculate(sem, &U_Taken, &V_Taken);
 		calculate(sem, &U_Taken, &V_Taken);
 		cout << U_Taken << " " << V_Taken << endl;
 	}
