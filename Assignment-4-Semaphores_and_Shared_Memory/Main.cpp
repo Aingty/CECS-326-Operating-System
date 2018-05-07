@@ -72,13 +72,12 @@ int main(){
 		}
 		else
 		{
-			//calculate(sem, &U_Taken, &V_Taken);
+			calculate(sem, &U_Taken, &V_Taken);
 		}
 	}
 	else
 	{
 		calculate(sem, &U_Taken, &V_Taken);
-		cout << U_Taken << endl;
 	}
     return(0);
 }
@@ -93,27 +92,25 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 	if(*U_Taken == false)
 	{
 		*U_Taken = true;
-		cout << "testing" << endl;
 		value = U;
 		currTaken = U_Taken;
-		cout << "testing1" << endl;
 	}
 	if(*V_Taken == false)
 	{
 		*V_Taken = true;
-		cout << "testing2" << endl;
 		value = V;
-		//*currTaken = V_Taken;
+		currTaken = V_Taken;
 	}
-	//sem.P(mySemaphore);
+	cout << "U: " << *U_Taken << endl;
+	cout << "V: " << *V_Taken << endl;
+	// sem.P(mySemaphore);
 	// while(randomGenerator <= 100 || randomGenerator%value == 0)
 	// {
 	// 	randomGenerator = rand();
 	// 	cout << "Generated: " << randomGenerator << endl;
 	// }
-	*currTaken = false;
-	cout << *U_Taken << endl;
-	//sem.V(mySemaphore);
+	// *currTaken = false;
+	// sem.V(mySemaphore);
 
 } // child_proc
 
