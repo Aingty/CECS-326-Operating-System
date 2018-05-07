@@ -102,7 +102,7 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 		*V_Taken = true;
 		cout << "testing2" << endl;
 		value = V;
-		*currTaken = V_Taken;
+		//*currTaken = V_Taken;
 	}
 	//sem.P(mySemaphore);
 	// while(randomGenerator <= 100 || randomGenerator%value == 0)
@@ -110,7 +110,8 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 	// 	randomGenerator = rand();
 	// 	cout << "Generated: " << randomGenerator << endl;
 	// }
-	//*currTaken = false;
+	*currTaken = false;
+	cout << U_Taken << endl;
 	//sem.V(mySemaphore);
 
 } // child_proc
