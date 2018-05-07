@@ -103,14 +103,14 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 		*currTaken = *V_Taken;
 	}
 
-	sem.P(mySemaphore);
+	//sem.P(mySemaphore);
 	do
 	{
 		randomGenerator = rand();
 		cout << "Generated: " << randomGenerator << endl;
 	} while(randomGenerator <= 100 || randomGenerator%value==0);
 	*currTaken = false;
-	sem.V(mySemaphore);
+	//sem.V(mySemaphore);
 
 } // child_proc
 
