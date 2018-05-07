@@ -95,7 +95,7 @@ void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken)
 		value = U;
 		currTaken = U_Taken;
 	}
-	if(*V_Taken == false)
+	else
 	{
 		*V_Taken = true;
 		value = V;
