@@ -15,14 +15,14 @@ using namespace std;
 
 const int U = 827395609;
 const int V = 962094883;
-
+const int BUFFSIZE = 3;
 enum {mySemaphore}; // set up names of my 2 semaphores
 
 
 
 int rand();
 
-void calculate(SEMAPHORE &, bool *, bool *);
+void calculate(SEMAPHORE &, char *);
 
 int main(){
 	// Setting the seed for a random generator
@@ -38,11 +38,12 @@ int main(){
 	SEMAPHORE sem(1); 
 	// Incrementing Semaphore by 2
 	sem.V(mySemaphore); 
-	//sem.V(mySemaphore);
 	
 	// Allocate Memory
 	shmid = shmget(IPC_PRIVATE, BUFFSIZE*sizeof(char), PERMS);
+	shmBUF = (char *)shmat(shmid, 0, SHM_RND);
 
+	*shmBUF = "1";
 	// Spawn 4 children then parent waits for prompt
 	if((arrayPID[0] = fork()))
 	{
@@ -75,50 +76,43 @@ int main(){
 		}
 		else
 		{
-			//calculate(sem, &U_Taken, &V_Taken);
-			//cout << U_Taken << " " << V_Taken << endl;
+			calculate(sem, &U_Taken, &V_Taken);
 		}
 	}
 	else
 	{
-		calculate(sem, &U_Taken, &V_Taken);
-		calculate(sem, &U_Taken, &V_Taken);
-		cout << U_Taken << " " << V_Taken << endl;
+		calculate(sem, shmBUF);
 	}
     return(0);
 }
 
 
 //-----------------------------------------------------//
-void calculate(SEMAPHORE &sem, bool *U_Taken, bool *V_Taken) 
+void calculate(SEMAPHORE &sem, char *shmBUF) 
 {
+	char temp;
 	int value;
-	bool *currTaken;
-	int randomGenerator = 111;
 	sem.P(mySemaphore);
-	if(*U_Taken == false)
+	temp = *shmBUF;
+	if (temp.compare("1") == 0)
 	{
-		*U_Taken = true;
 		value = U;
-		currTaken = U_Taken;
+		*shmBUF = "2";
 	}
 	else
 	{
-		*V_Taken = true;
 		value = V;
-		currTaken = V_Taken;
+		*shmBUF = "1";
 	}
+	do
+	{
+		randomGenerator = rand();
+		cout << "Generated: " << randomGenerator << endl;
+	}
+	while(randomGenerator <= 100 || randomGenerator%value == 0);
 	sem.V(mySemaphore);
-	cout << "U: " << *U_Taken << endl;
-	cout << "V: " << *V_Taken << endl;
-	// while(randomGenerator <= 100 || randomGenerator%value == 0)
-	// {
-	// 	randomGenerator = rand();
-	// 	cout << "Generated: " << randomGenerator << endl;
-	// }
-	// *currTaken = false;
+} 
 
-} // child_proc
 
 void parent_cleanup (SEMAPHORE &sem, int shmid) 
 {
