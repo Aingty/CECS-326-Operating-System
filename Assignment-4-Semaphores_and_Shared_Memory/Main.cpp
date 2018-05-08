@@ -94,6 +94,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 {
 	char temp;
 	int value;
+	int randomGenerator;
 	sem.P(mySemaphore);
 	temp = *shmBUF;
 	if (temp == '1')
