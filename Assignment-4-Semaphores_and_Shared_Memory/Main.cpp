@@ -23,6 +23,7 @@ enum {mySemaphore}; // set up names of my 2 semaphores
 int rand();
 
 void calculate(SEMAPHORE &, char *);
+void intializeMem(char *);
 
 int main(){
 	// Setting the seed for a random generator
@@ -43,7 +44,8 @@ int main(){
 	shmid = shmget(IPC_PRIVATE, BUFFSIZE*sizeof(char), PERMS);
 	shmBUF = (char *)shmat(shmid, 0, SHM_RND);
 
-	*shmBUF = "1";
+	initializeMem(shmBUF);
+
 	// Spawn 4 children then parent waits for prompt
 	if((arrayPID[0] = fork()))
 	{
@@ -76,7 +78,7 @@ int main(){
 		}
 		else
 		{
-			calculate(sem, &U_Taken, &V_Taken);
+			calculate(sem, shmBUF);
 		}
 	}
 	else
@@ -113,6 +115,10 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 	sem.V(mySemaphore);
 } 
 
+void initializeMem(char *shmBUFF)
+{
+	*shmBUFF = "1";
+}
 
 void parent_cleanup (SEMAPHORE &sem, int shmid) 
 {
