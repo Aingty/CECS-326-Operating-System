@@ -107,6 +107,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 		value = V;
 		*shmBUF = '1';
 	}
+	cout << "Shared Mem: " << *shmBUF <<endl;
 	do
 	{
 		randomGenerator = rand();
