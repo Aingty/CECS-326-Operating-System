@@ -26,8 +26,6 @@ void calculate(SEMAPHORE &, char *);
 void intializeMem(char *);
 
 int main(){
-	// Setting the seed for a random generator
-	srand (time(NULL));
 	
 	int shmid;
 	char *shmBUF;
@@ -92,6 +90,8 @@ int main(){
 //-----------------------------------------------------//
 void calculate(SEMAPHORE &sem, char *shmBUF) 
 {
+	// Setting the seed for a random generator
+	srand (time(NULL));
 	char temp;
 	int value;
 	int randomGenerator;
