@@ -44,7 +44,7 @@ int main(){
 	shmid = shmget(IPC_PRIVATE, BUFFSIZE*sizeof(char), PERMS);
 	shmBUF = (char *)shmat(shmid, 0, SHM_RND);
 
-	shmBUF = '1';
+	*shmBUF = '1';
 
 	// Spawn 4 children then parent waits for prompt
 	if((arrayPID[0] = fork()))
