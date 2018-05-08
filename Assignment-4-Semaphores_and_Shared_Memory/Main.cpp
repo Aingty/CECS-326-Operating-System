@@ -96,15 +96,15 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 	int value;
 	sem.P(mySemaphore);
 	temp = *shmBUF;
-	if (temp.compare("1") == 0)
+	if (temp == '1')
 	{
 		value = U;
-		*shmBUF = "2";
+		*shmBUF = '2';
 	}
 	else
 	{
 		value = V;
-		*shmBUF = "1";
+		*shmBUF = '1';
 	}
 	do
 	{
@@ -117,7 +117,11 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 
 void initializeMem(char *shmBUFF)
 {
-	*shmBUFF = "1";
+	char temp[1];
+	temp[1] = '1';
+	char input;
+	input = temp[1];
+	*shmBUFF = input;
 }
 
 void parent_cleanup (SEMAPHORE &sem, int shmid) 
