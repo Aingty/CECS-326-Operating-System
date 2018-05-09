@@ -14,8 +14,6 @@
 #include <cstdlib>  // For srand() and rand()
 
 using namespace std;
-
-
 const int U = 827395609;
 const int V = 962094883;
 const int BUFFSIZE = 3;
@@ -116,10 +114,11 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 		*shmBUF = '1';
 	}
 	sem.V(mySemaphoreA);
-	sem.P(mySemaphoreB);	
+	sem.P(mySemaphoreB);
+	cout << RAND_MAX << endl;	
 	do
 	{
-		randomGenerator = rand();
+		randomGenerator = rand()%1000000000 + 1;
 		cout << childName << " Generated: " << randomGenerator <<" Working on "<< value << endl;
 	}
 	while(randomGenerator >= 100 || value % randomGenerator != 0);
