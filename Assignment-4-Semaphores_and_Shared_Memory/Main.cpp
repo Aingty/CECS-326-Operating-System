@@ -117,7 +117,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	sem.P(mySemaphoreB);
 	do
 	{
-		randomGenerator = rand()%1000000 + 1;
+		randomGenerator = rand()%100000 + 1;
 		cout << childName << " Generated: " << randomGenerator <<" Working on "<< value << endl;
 	}
 	while(randomGenerator >= 100 || value % randomGenerator != 0);
