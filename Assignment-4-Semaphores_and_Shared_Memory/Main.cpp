@@ -17,7 +17,7 @@ using namespace std;
 const int U = 827395609;
 const int V = 962094883;
 const int BUFFSIZE = 3;
-enum {mySemaphoreA, mySemaphoreB}; // set up names of my semaphore(s)
+enum {mySemaphore}; // set up names of my semaphore(s)
 
 
 
@@ -35,12 +35,11 @@ int main(){
 	int arrayPID [4]; 
 	
 	// Constructing an Object with 2 semaphores (sem is set to zero when initialize)
-	SEMAPHORE sem(2); 
+	SEMAPHORE sem(1); 
 
 	// Incrementing Semaphores
-	sem.V(mySemaphoreA); 
-	sem.V(mySemaphoreB);
-	sem.V(mySemaphoreB);
+	sem.V(mySemaphore); 
+	sem.V(mySemaphore);
 
 	// Allocate Memory
 	shmid = shmget(IPC_PRIVATE, BUFFSIZE*sizeof(char), PERMS);
@@ -99,30 +98,18 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	char temp;
 	int value;
 	int randomGenerator;
-	sem.P(mySemaphoreA);
-	while(*shmBUF == '4' || *shmBUF == '1')
+	sem.P(mySemaphore);
+	cout << "Testing: "<< *shmBUF <<endl;
+	if(*shmBUF == '1')
 	{
-		cout << "Testing: "<< *shmBUF <<endl;
-		if(*shmBUF == '1' || *shmBUF == '2')
-		{
-			if(*shmBUF == '1')
-			{
-				*shmBUF = '3';
-			}
-			else
-			{
-				*shmBUF = '4';
-			}
-			value = V;
-		}
-		else if(*shmBUF == '3')
-		{
-			*shmBUF = '4';
-			value = U;
-		}
+		*shmBUF = '2';
+		value = V;
 	}
-	sem.V(mySemaphoreA);
-	sem.P(mySemaphoreB);
+	else
+	{
+		value = U;
+	}
+
 	// Setting the seed for a random generator
 	srand (time(NULL));
 	do
@@ -134,20 +121,13 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	cout << "Child: "<< childName << " is done!" << endl;
 	
 	// Freeing up V or U depending on *shmBUF
-	if(*shmBUF == '3')
+	if(value == V)
 	{
 		*shmBUF = '1';
 	}
 	else
 	{
-		if(value == V)
-		{
-			*shmBUF = '2';
-		}
-		else
-		{
-			*shmBUF = '3';
-		}
+		*shmBUF = '2';
 	}
 	sem.V(mySemaphoreB);
 } 
