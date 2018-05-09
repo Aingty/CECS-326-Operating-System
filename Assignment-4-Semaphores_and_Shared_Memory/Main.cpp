@@ -119,7 +119,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 	do
 	{
 		randomGenerator = rand();
-		cout << "Generated: " << randomGenerator << endl;
+		cout << "Generated: " << randomGenerator << " Into "<< value << endl;
 	}
 	while(randomGenerator >= 100 || randomGenerator%value != 0);
 	sem.V(mySemaphoreB);
