@@ -60,7 +60,7 @@ int main(){
 				{
 					do
 					{
-						cout << "(!wq to Quit) : ";
+						cout << "(!wq to Quit) : \n";
 						cin >> decision;
 					} while(decision.compare("!wq") != 0);
 					for(int i = 0; i <= 3; i++)
