@@ -102,6 +102,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	sem.P(mySemaphoreA);
 	while(*shmBUF != 4)
 	{
+		cout << 'Testing: '<<*shmBUF <<endl;
 		if(*shmBUF == '1' || *shmBUF == '2')
 		{
 			if(*shmBUF == '1')
