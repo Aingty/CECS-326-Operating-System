@@ -10,6 +10,8 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #include "semaphore.h"
+#include <ctime>    // For time()
+#include <cstdlib>  // For srand() and rand()
 
 using namespace std;
 
