@@ -17,12 +17,11 @@ using namespace std;
 const int U = 827395609;
 const int V = 962094883;
 const int BUFFSIZE = 3;
-enum {mySemaphore}; // set up names of my semaphore(s)
-
+// set up names of my semaphore(s)
+enum {mySemaphore}; 
 
 
 int rand();
-
 void calculate(SEMAPHORE &, char *, char);
 void parent_cleanup(SEMAPHORE &, int);
 
@@ -34,7 +33,7 @@ int main(){
 	string decision;
 	int arrayPID [4]; 
 	
-	// Constructing an Object with 2 semaphores (sem is set to zero when initialize)
+	// Constructing an Object with 1 semaphores 
 	SEMAPHORE sem(1); 
 
 	// Incrementing Semaphores
@@ -45,6 +44,7 @@ int main(){
 	shmid = shmget(IPC_PRIVATE, BUFFSIZE*sizeof(char), PERMS);
 	shmBUF = (char *)shmat(shmid, 0, SHM_RND);
 
+	// Initiallizing Shared Memory
 	*shmBUF = '1';
 
 	// Spawn 4 children then parent waits for prompt
@@ -58,7 +58,7 @@ int main(){
 				{
 					do
 					{
-						cout << "(!wq to Quit) : \n";
+						cout << "(!wq to Quit) \n";
 						cin >> decision;
 					} while(decision.compare("!wq") != 0);
 					for(int i = 0; i <= 3; i++)
@@ -90,7 +90,6 @@ int main(){
     return(0);
 }
 
-
 //-----------------------------------------------------//
 void calculate(SEMAPHORE &sem, char *shmBUF, char childName) 
 {
@@ -98,6 +97,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	int value;
 	int randomGenerator;
 	sem.P(mySemaphore);
+	// If statement to check which (U or V) is available to work on
 	if(*shmBUF == '1')
 	{
 		*shmBUF = '2';
@@ -116,7 +116,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	}
 	while(randomGenerator >= 100 || value % randomGenerator != 0);
 	cout << "Child: "<< childName << " is done!" << endl;
-	// Freeing up V or U depending on *shmBUF
+	// Freeing up V or U depending on value
 	if(value == V)
 	{
 		*shmBUF = '1';
@@ -126,9 +126,8 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 
 void parent_cleanup (SEMAPHORE &sem, int shmid) 
 {
-
 	int status;			/* child status */
 	wait(0);	/* wait for child to exit */
 	shmctl(shmid, IPC_RMID, NULL);	/* cleaning up */
 	sem.remove();
-} // parent_cleanup
+}
