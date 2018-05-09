@@ -23,6 +23,7 @@ enum {mySemaphoreA, mySemaphoreB}; // set up names of my 2 semaphores
 int rand();
 
 void calculate(SEMAPHORE &, char *);
+void parent_cleanup(SEMAPHORE &, int);
 
 int main(){
 	
@@ -34,7 +35,7 @@ int main(){
 	
 	// Constructing an Object with 2 semaphores (sem is set to zero when initialize)
 	SEMAPHORE sem(2); 
-	
+
 	// Incrementing Semaphores
 	sem.V(mySemaphoreA); 
 	sem.V(mySemaphoreB);
