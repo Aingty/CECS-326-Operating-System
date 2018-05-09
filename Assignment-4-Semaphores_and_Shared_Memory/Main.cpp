@@ -23,7 +23,6 @@ enum {mySemaphore}; // set up names of my 2 semaphores
 int rand();
 
 void calculate(SEMAPHORE &, char *);
-void intializeMem(char *);
 
 int main(){
 	
@@ -96,6 +95,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 	int value;
 	int randomGenerator;
 	sem.P(mySemaphore);
+	sem.P(mySemaphore);
 	temp = *shmBUF;
 	if (temp == '1')
 	{
@@ -107,6 +107,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 		value = V;
 		*shmBUF = '1';
 	}
+	sem.V(mySemaphore);
 	cout << "Shared Mem: " << *shmBUF <<endl;
 	do
 	{
@@ -116,15 +117,6 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 	while(randomGenerator <= 100 || randomGenerator%value == 0);
 	sem.V(mySemaphore);
 } 
-
-void initializeMem(char *shmBUFF)
-{
-	char temp[1];
-	temp[1] = '1';
-	char input;
-	input = temp[1];
-	*shmBUFF = input;
-}
 
 void parent_cleanup (SEMAPHORE &sem, int shmid) 
 {
