@@ -36,7 +36,8 @@ int main(){
 	SEMAPHORE sem(1); 
 	// Incrementing Semaphore by 2
 	sem.V(mySemaphore); 
-	
+	sem.V(mySemaphore);
+
 	// Allocate Memory
 	shmid = shmget(IPC_PRIVATE, BUFFSIZE*sizeof(char), PERMS);
 	shmBUF = (char *)shmat(shmid, 0, SHM_RND);
