@@ -58,7 +58,7 @@ int main(){
 				{
 					do
 					{
-						//cout << "(!wq to Quit) : \n";
+						cout << "(!wq to Quit) : \n";
 						cin >> decision;
 					} while(decision.compare("!wq") != 0);
 					for(int i = 0; i <= 3; i++)
@@ -94,7 +94,6 @@ int main(){
 //-----------------------------------------------------//
 void calculate(SEMAPHORE &sem, char *shmBUF, char childName) 
 {
-
 	char temp;
 	int value;
 	int randomGenerator;
@@ -108,24 +107,20 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	{
 		value = U;
 	}
-	cout << "Testing: "<< *shmBUF << ", " << value << endl;
-
 	// Setting the seed for a random generator
 	srand (time(NULL));
 	do
 	{
-		randomGenerator = rand()%10000000 + 1;
-		//cout << childName << " Generated: " << randomGenerator <<" Working on "<< value << endl;
+		randomGenerator = rand()%100000 + 1;
+		cout << childName << " Generated: " << randomGenerator <<" Working on "<< value << endl;
 	}
 	while(randomGenerator >= 100 || value % randomGenerator != 0);
 	cout << "Child: "<< childName << " is done!" << endl;
-	
 	// Freeing up V or U depending on *shmBUF
 	if(value == V)
 	{
 		*shmBUF = '1';
 	}
-	
 	sem.V(mySemaphore);
 } 
 
