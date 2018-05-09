@@ -17,7 +17,7 @@ using namespace std;
 const int U = 827395609;
 const int V = 962094883;
 const int BUFFSIZE = 3;
-enum {mySemaphore}; // set up names of my semaphore(s)
+enum {mySemaphoreA, mySemaphoreB}; // set up names of my semaphore(s)
 
 
 
@@ -38,8 +38,9 @@ int main(){
 	SEMAPHORE sem(2); 
 
 	// Incrementing Semaphores
-	sem.V(mySemaphore); 
-	sem.V(mySemaphore);
+	sem.V(mySemaphoreA); 
+	sem.V(mySemaphoreB);
+	sem.V(mySemaphoreB);
 
 	// Allocate Memory
 	shmid = shmget(IPC_PRIVATE, BUFFSIZE*sizeof(char), PERMS);
@@ -98,7 +99,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	char temp;
 	int value;
 	int randomGenerator;
-	sem.P(mySemaphore);
+	sem.P(mySemaphoreA);
 	while(*shmBUF != 4)
 	{
 		if(*shmBUF == '1' || *shmBUF == '2')
@@ -119,6 +120,8 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 			value = U;
 		}
 	}
+	sem.V(mySemaphoreA);
+	sem.P(mySemaphoreB);
 	// Setting the seed for a random generator
 	srand (time(NULL));
 	do
@@ -145,7 +148,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 			*shmBUF = '3';
 		}
 	}
-	sem.V(mySemaphore);
+	sem.V(mySemaphoreB);
 } 
 
 void parent_cleanup (SEMAPHORE &sem, int shmid) 
