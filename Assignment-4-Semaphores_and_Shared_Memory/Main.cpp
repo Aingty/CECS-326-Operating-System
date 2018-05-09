@@ -71,12 +71,12 @@ int main(){
 				}
 				else
 				{
-					//calculate(sem, &U_Taken, &V_Taken);			
+					calculate(sem, shmBUF, 'D');			
 				}
 			}
 			else
 			{
-				calculate(sem,shmBUF, 'C');
+				calculate(sem, shmBUF, 'C');
 			}
 		}
 		else
