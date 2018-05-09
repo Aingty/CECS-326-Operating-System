@@ -13,8 +13,10 @@
 
 using namespace std;
 
-const int U = 827395609;
-const int V = 962094883;
+const int U = 100;
+const int V = 5;
+//const int U = 827395609;
+//const int V = 962094883;
 const int BUFFSIZE = 3;
 enum {mySemaphoreA, mySemaphoreB}; // set up names of my 2 semaphores
 
@@ -118,10 +120,10 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 	
 	do
 	{
-		randomGenerator = rand();
+		randomGenerator = (rand()%10) + 1;
 		cout << "Generated: " << value % randomGenerator << endl;
 	}
-	while(randomGenerator >= 100 || value % randomGenerator != 0);
+	while(/*randomGenerator >= 100 ||*/ value % randomGenerator != 0);
 	sem.V(mySemaphoreB);
 } 
 
