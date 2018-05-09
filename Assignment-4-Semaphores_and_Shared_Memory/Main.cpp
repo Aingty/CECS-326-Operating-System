@@ -100,11 +100,6 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 	char temp;
 	int value;
 	int randomGenerator;
-	for (int i = 0; i < 10; i++)
-	{
-		randomGenerator = rand();
-		cout << "Testing: " << randomGenerator << ", ";
-	}
 	cout << endl;
 	sem.P(mySemaphoreA);
 	temp = *shmBUF;
@@ -121,12 +116,17 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 	sem.V(mySemaphoreA);
 	sem.P(mySemaphoreB);
 	cout << "Shared Mem: " << *shmBUF <<endl;
-	do
+	for (int i = 0; i < 10; i++)
 	{
 		randomGenerator = rand();
-		cout << "Generated: " << randomGenerator << endl;
+		cout << "Testing: " << randomGenerator << ", ";
 	}
-	while(randomGenerator <= 100 || randomGenerator%value == 0);
+	// do
+	// {
+	// 	randomGenerator = rand();
+	// 	cout << "Generated: " << randomGenerator << endl;
+	// }
+	// while(randomGenerator <= 100 || randomGenerator%value == 0);
 	sem.V(mySemaphoreB);
 } 
 
