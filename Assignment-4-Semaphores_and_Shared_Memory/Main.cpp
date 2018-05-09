@@ -24,7 +24,7 @@ enum {mySemaphoreA, mySemaphoreB}; // set up names of my 2 semaphores
 
 int rand();
 
-void calculate(SEMAPHORE &, char *);
+void calculate(SEMAPHORE &, char *, char);
 void parent_cleanup(SEMAPHORE &, int);
 
 int main(){
@@ -77,24 +77,24 @@ int main(){
 			}
 			else
 			{
-				//calculate(sem, &U_Taken, &V_Taken);
+				calculate(sem,shmBUF, 'C');
 			}
 		}
 		else
 		{
-			calculate(sem, shmBUF);
+			calculate(sem, shmBUF, 'B');
 		}
 	}
 	else
 	{
-		calculate(sem, shmBUF);
+		calculate(sem, shmBUF, 'A');
 	}
     return(0);
 }
 
 
 //-----------------------------------------------------//
-void calculate(SEMAPHORE &sem, char *shmBUF) 
+void calculate(SEMAPHORE &sem, char *shmBUF, char childName) 
 {
 	// Setting the seed for a random generator
 	srand (time(0));
@@ -115,13 +115,11 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 		*shmBUF = '1';
 	}
 	sem.V(mySemaphoreA);
-	sem.P(mySemaphoreB);
-	cout << "Shared Mem: " << *shmBUF <<endl;
-	
+	sem.P(mySemaphoreB);	
 	do
 	{
 		randomGenerator = (rand()%10) + 1;
-		cout << "Generated: " << value % randomGenerator << endl;
+		cout << childName << " Generated: " << randomGenerator <<" Working on "<< value << endl;
 	}
 	while(/*randomGenerator >= 100 ||*/ value % randomGenerator != 0);
 	sem.V(mySemaphoreB);
