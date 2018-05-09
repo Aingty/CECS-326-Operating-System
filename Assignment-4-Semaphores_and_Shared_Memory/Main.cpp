@@ -16,7 +16,7 @@ using namespace std;
 const int U = 827395609;
 const int V = 962094883;
 const int BUFFSIZE = 3;
-enum {mySemaphore}; // set up names of my 2 semaphores
+enum {mySemaphoreA, mySemaphoreB}; // set up names of my 2 semaphores
 
 
 
@@ -32,11 +32,13 @@ int main(){
 	string decision;
 	int arrayPID [4]; 
 	
-	// Constructing an Object with 1 semaphore (sem is set to zero when initialize)
-	SEMAPHORE sem(1); 
-	// Incrementing Semaphore by 2
-	sem.V(mySemaphore); 
-	sem.V(mySemaphore);
+	// Constructing an Object with 2 semaphores (sem is set to zero when initialize)
+	SEMAPHORE sem(2); 
+	
+	// Incrementing Semaphores
+	sem.V(mySemaphoreA); 
+	sem.V(mySemaphoreB);
+	sem.V(mySemaphoreB);
 
 	// Allocate Memory
 	shmid = shmget(IPC_PRIVATE, BUFFSIZE*sizeof(char), PERMS);
@@ -63,6 +65,7 @@ int main(){
 						// Killing all Child Processes
 						kill(arrayPID[i], SIGKILL);
 					}
+					parent_cleanup(sem, shmid);
 				}
 				else
 				{
@@ -95,8 +98,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 	char temp;
 	int value;
 	int randomGenerator;
-	sem.P(mySemaphore);
-	sem.P(mySemaphore);
+	sem.P(mySemaphoreA);
 	temp = *shmBUF;
 	if (temp == '1')
 	{
@@ -108,7 +110,8 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 		value = V;
 		*shmBUF = '1';
 	}
-	sem.V(mySemaphore);
+	sem.V(mySemaphoreA);
+	sem.P(mySemaphoreB);
 	cout << "Shared Mem: " << *shmBUF <<endl;
 	do
 	{
@@ -116,7 +119,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF)
 		cout << "Generated: " << randomGenerator << endl;
 	}
 	while(randomGenerator <= 100 || randomGenerator%value == 0);
-	sem.V(mySemaphore);
+	sem.V(mySemaphoreB);
 } 
 
 void parent_cleanup (SEMAPHORE &sem, int shmid) 
