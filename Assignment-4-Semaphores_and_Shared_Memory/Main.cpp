@@ -95,10 +95,17 @@ int main(){
 void calculate(SEMAPHORE &sem, char *shmBUF) 
 {
 	// Setting the seed for a random generator
-	srand (time(NULL));
+	srand (time(0));
+
 	char temp;
 	int value;
 	int randomGenerator;
+	for (int i = 0; i < 10; i++)
+	{
+		randomGenerator = rand();
+		cout << "Testing: " << randomGenerator << ", ";
+	}
+	cout << endl;
 	sem.P(mySemaphoreA);
 	temp = *shmBUF;
 	if (temp == '1')
