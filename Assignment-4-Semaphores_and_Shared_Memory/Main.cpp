@@ -95,8 +95,6 @@ int main(){
 //-----------------------------------------------------//
 void calculate(SEMAPHORE &sem, char *shmBUF, char childName) 
 {
-	// Setting the seed for a random generator
-	srand (time(0));
 
 	char temp;
 	int value;
@@ -115,6 +113,8 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	}
 	sem.V(mySemaphoreA);
 	sem.P(mySemaphoreB);
+	// Setting the seed for a random generator
+	srand (time(NULL));
 	do
 	{
 		randomGenerator = rand()%100000 + 1;
