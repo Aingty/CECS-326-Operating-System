@@ -14,10 +14,8 @@
 #include <cstdlib>  // For srand() and rand()
 
 using namespace std;
-// const int U = 827395609;
-// const int V = 962094883;
-const int U = 80000000;
-const int V = 90000000;
+const int U = 827395609;
+const int V = 962094883;
 const int BUFFSIZE = 3;
 enum {mySemaphoreA, mySemaphoreB}; // set up names of my 2 semaphores
 
