@@ -129,7 +129,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	{
 		*shmBUF = '2';
 	}
-	sem.V(mySemaphoreB);
+	sem.V(mySemaphore);
 } 
 
 void parent_cleanup (SEMAPHORE &sem, int shmid) 
