@@ -99,7 +99,6 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	int value;
 	int randomGenerator;
 	sem.P(mySemaphore);
-	cout << "Testing: "<< *shmBUF <<endl;
 	if(*shmBUF == '1')
 	{
 		*shmBUF = '2';
@@ -109,6 +108,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	{
 		value = U;
 	}
+	cout << "Testing: "<< *shmBUF << ", " << value << endl;
 
 	// Setting the seed for a random generator
 	srand (time(NULL));
