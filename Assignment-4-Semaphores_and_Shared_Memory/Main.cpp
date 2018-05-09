@@ -128,7 +128,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	do
 	{
 		randomGenerator = rand()%100000 + 1;
-		cout << childName << " Generated: " << randomGenerator <<" Working on "<< value << endl;
+		//cout << childName << " Generated: " << randomGenerator <<" Working on "<< value << endl;
 	}
 	while(randomGenerator >= 100 || value % randomGenerator != 0);
 	cout << "Child: "<< childName << " is done!" << endl;
