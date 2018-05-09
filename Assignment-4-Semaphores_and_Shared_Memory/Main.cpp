@@ -16,8 +16,8 @@
 using namespace std;
 // const int U = 827395609;
 // const int V = 962094883;
-const int U = 8000000;
-const int V = 9000000;
+const int U = 80000000;
+const int V = 90000000;
 const int BUFFSIZE = 3;
 enum {mySemaphoreA, mySemaphoreB}; // set up names of my 2 semaphores
 
@@ -120,7 +120,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 	cout << RAND_MAX << endl;	
 	do
 	{
-		randomGenerator = rand()%100000 + 1;
+		randomGenerator = rand()%1000000 + 1;
 		cout << childName << " Generated: " << randomGenerator <<" Working on "<< value << endl;
 	}
 	while(randomGenerator >= 100 || value % randomGenerator != 0);
