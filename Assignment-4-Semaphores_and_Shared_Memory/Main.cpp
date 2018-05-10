@@ -10,8 +10,9 @@
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #include "semaphore.h"
-#include <ctime>    // For time()
-#include <cstdlib>  // For srand() and rand()
+// For time(), srand() and rand()
+#include <ctime>    
+#include <cstdlib>  
 
 using namespace std;
 const int U = 827395609;
