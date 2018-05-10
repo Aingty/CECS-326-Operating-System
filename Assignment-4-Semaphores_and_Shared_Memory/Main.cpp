@@ -26,8 +26,6 @@ void calculate(SEMAPHORE &, char *, char);
 void parent_cleanup(SEMAPHORE &, int);
 
 int main(){
-	// Setting the seed for a random generator
-	srand (time(NULL));
 	
 	int shmid;
 	char *shmBUF;
@@ -95,6 +93,8 @@ int main(){
 //-----------------------------------------------------//
 void calculate(SEMAPHORE &sem, char *shmBUF, char childName) 
 {
+	// Setting the seed for a random generator
+	srand(time(NULL) ^ (getpid()<<16));
 	char temp;
 	int value;
 	int randomGenerator;
