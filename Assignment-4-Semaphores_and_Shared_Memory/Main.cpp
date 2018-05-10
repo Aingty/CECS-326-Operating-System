@@ -93,36 +93,39 @@ int main(){
 //-----------------------------------------------------//
 void calculate(SEMAPHORE &sem, char *shmBUF, char childName) 
 {
-	// Setting the seed for a random generator
-	srand(time(NULL) ^ (getpid()<<16));
-	char temp;
-	int value;
-	int randomGenerator;
-	sem.P(mySemaphore);
-	// If statement to check which (U or V) is available to work on
-	if(*shmBUF == '1')
+	while(true) // Run forever
 	{
-		*shmBUF = '2';
-		value = V;
+		// Setting the seed for a random generator with PID
+		srand(time(NULL) ^ (getpid()<<16));
+		char temp;
+		int value;
+		int randomGenerator;
+		sem.P(mySemaphore);
+		// If statement to check which (U or V) is available to work on
+		if(*shmBUF == '1')
+		{
+			*shmBUF = '2';
+			value = V;
+		}
+		else
+		{
+			value = U;
+		}
+		// Generating 1 to 100000 until conditions are met
+		do
+		{
+			randomGenerator = rand()%100000 + 1;
+			cout << childName << " Generated: " << randomGenerator <<" Working on "<< value << endl;
+		}
+		while(randomGenerator >= 100 || value % randomGenerator != 0);
+		cout << "Child: "<< childName << " is done!" << endl;
+		// Freeing up V or U depending on value
+		if(value == V)
+		{
+			*shmBUF = '1';
+		}
+		sem.V(mySemaphore);
 	}
-	else
-	{
-		value = U;
-	}
-	
-	do
-	{
-		randomGenerator = rand()%100000 + 1;
-		cout << childName << " Generated: " << randomGenerator <<" Working on "<< value << endl;
-	}
-	while(randomGenerator >= 100 || value % randomGenerator != 0);
-	cout << "Child: "<< childName << " is done!" << endl;
-	// Freeing up V or U depending on value
-	if(value == V)
-	{
-		*shmBUF = '1';
-	}
-	sem.V(mySemaphore);
 } 
 
 void parent_cleanup (SEMAPHORE &sem, int shmid) 
