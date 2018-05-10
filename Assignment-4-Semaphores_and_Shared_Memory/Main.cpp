@@ -101,6 +101,7 @@ void calculate(SEMAPHORE &sem, char *shmBUF, char childName)
 		int value;
 		int randomGenerator;
 		sem.P(mySemaphore);
+		cout << childName << " has started!!" << endl;
 		// If statement to check which (U or V) is available to work on
 		if(*shmBUF == '1')
 		{
